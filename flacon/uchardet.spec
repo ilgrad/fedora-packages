@@ -2,7 +2,7 @@
 
 Name:          uchardet
 Version:       0.0.0
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       An encoding detector library ported from Mozilla
 
 License:       MPLv1.1
@@ -22,20 +22,18 @@ encoding of the text.
 
 
 %package	libs
-Summary:        uchardet development package
+Summary:        Libraries for %{name}
 
 %description	libs
-This package provides the libraries and binaries that are shared amongst
-the various components of uchardet.
-
+The %{name}-libs package contains shared libraries.
 
 %package	libs-devel
-Summary:        uchardet development package
+Summary:        Development files for %{name}-libs
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description	libs-devel
-This package provides the development files for the libraries that are
-shared amongst the various components of uchardet.
+The %{name}-libs-devel package contains headers and shared libraries
+for developing tools for %{name}.
 
 
 %prep
@@ -52,7 +50,7 @@ mv %{buildroot}/usr/lib %{buildroot}%{_libdir}
 # remove static library
 rm -f %{buildroot}%{_libdir}/lib%{name}.a
 
-%post -p /sbin/ldconfig
+%post  -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
@@ -73,6 +71,9 @@ rm -f %{buildroot}%{_libdir}/lib%{name}.a
 
 
 %changelog
+* Mon Sep 21 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.0-3
+- fix description and summary for libs and libs-devel
+
 * Mon Sep 21 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.0-2
 - fix version on 0.0.0
 - fix license path
