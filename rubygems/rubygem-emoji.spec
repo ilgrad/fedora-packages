@@ -4,7 +4,7 @@
 Name: rubygem-%{gem_name}
 Version: 1.0.5
 Release: 1%{?dist}
-Summary: A Ruby gem. For emoji. For everyone. :heart:
+Summary: A Ruby gem. For emoji.
 Group: Development/Languages
 License: MIT
 URL: http://github.com/wpeterson/emoji
@@ -16,7 +16,9 @@ BuildRequires: rubygem(minitest)
 BuildArch: noarch
 
 %description
-A Ruby gem. For emoji. For everyone. :heart:.
+This gem exposes the Phantom Open Emoji library unicode/image assets
+and APIs for working with them. Easily lookup emoji name, unicode character,
+or image assets and convert emoji representations.
 
 
 %package doc
