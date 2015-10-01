@@ -1,44 +1,42 @@
-%global srcname uchardet
-%global sum     An encoding detector library ported from Mozilla
 %global commit0 84e292d1b9ef38bfa7914de12d345a48f3136c92
 %global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
 
-Name:          %{srcname}
+Name:          uchardet
 Version:       0.0.1
-Release:       4.git%{shortcommit0}%{?dist}
-Summary:       %{sum}
+Release:       5.git%{shortcommit0}%{?dist}
+Summary:       An encoding detector library ported from Mozilla
 
 License:       MPLv1.1
-URL:           https://github.com/BYVoid/%{srcname}
+URL:           https://github.com/BYVoid/%{name}
 Source0:       %{url}/archive/%{commit0}/.tar.gz#/%{name}-%{shortcommit0}.tar.gz
 
 BuildRequires: cmake
 
 %description
-%{srcname} is a C language binding of the original C++ implementation of the
-universal charset detection library by Mozilla. %{srcname} is an encoding
+Uchardet is a C language binding of the original C++ implementation of the
+universal charset detection library by Mozilla. Uchardet is an encoding
 detector library, which takes a sequence of bytes in an unknown character
 encoding without any additional information, and attempts to determine the
 encoding of the text.
 
 
 %package	libs
-Summary:        Libraries for %{srcname}
+Summary:        Libraries for uchardet
 
 %description	libs
-The %{name}-libs package contains shared libraries.
+The uchardet-libs package contains shared libraries.
 
 %package	libs-devel
-Summary:        Development files for %{srcname}-libs
-Requires:       %{srcname}-libs%{?_isa} = %{version}-%{release}
+Summary:        Development files for uchardet-libs
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description	libs-devel
-The %{srcname}-libs-devel package contains headers and shared libraries
-for developing tools for %{srcname}.
+The uchardet-libs-devel package contains headers and shared libraries
+for developing tools for uchardet.
 
 
 %prep
-%autosetup -n %{srcname}-%{commit0}
+%autosetup -n %{name}-%{commit0}
 
 %build
 %cmake -DCMAKE_INSTALL_LIBDIR=%{_libdir}
@@ -48,7 +46,7 @@ make %{?_smp_mflags} V=1
 %make_install
 
 # remove static library
-rm -f %{buildroot}%{_libdir}/lib%{srcname}.a
+rm -f %{buildroot}%{_libdir}/lib%{name}.a
 
 %post libs -p /sbin/ldconfig
 
@@ -57,19 +55,22 @@ rm -f %{buildroot}%{_libdir}/lib%{srcname}.a
 %files
 %doc AUTHORS
 %{license} COPYING
-%{_bindir}/%{srcname}
-%{_mandir}/man1/%{srcname}.1.*
+%{_bindir}/%{name}
+%{_mandir}/man1/%{name}.1.*
 
 %files libs
-%{_libdir}/lib%{srcname}.so.*
+%{_libdir}/lib%{name}.so.*
 
 %files libs-devel
-%{_includedir}/%{srcname}
-%{_libdir}/lib%{srcname}.so
-%{_libdir}/pkgconfig/%{srcname}.pc
+%{_includedir}/%{name}
+%{_libdir}/lib%{name}.so
+%{_libdir}/pkgconfig/%{name}.pc
 
 
 %changelog
+* Thu Oct  1 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.1-5
+- remove macros srcname and sum
+
 * Mon Sep 21 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.1-4
 - fix enable debug packages
 - fix add flag verbose for make
