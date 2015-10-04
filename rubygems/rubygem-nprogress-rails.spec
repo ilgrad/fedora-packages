@@ -12,8 +12,6 @@ Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: ruby
-# BuildRequires: rubygem(sass-rails)
-# BuildRequires: rubygem(sass)
 BuildArch: noarch
 
 %description
