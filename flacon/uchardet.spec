@@ -1,14 +1,11 @@
-%global commit0 84e292d1b9ef38bfa7914de12d345a48f3136c92
-%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-
 Name:          uchardet
-Version:       0.0.1
-Release:       5.git%{shortcommit0}%{?dist}
+Version:       0.0.3
+Release:       1%{?dist}
 Summary:       An encoding detector library ported from Mozilla
 
 License:       MPLv1.1
 URL:           https://github.com/BYVoid/%{name}
-Source0:       %{url}/archive/%{commit0}/.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Source0:       https://github.com/BYVoid/uchardet/archive/v%{version}.tar.gz
 
 BuildRequires: cmake
 
@@ -36,7 +33,7 @@ for developing tools for uchardet.
 
 
 %prep
-%autosetup -n %{name}-%{commit0}
+%autosetup #-n %{name}-%{commit0}
 
 %build
 %cmake -DCMAKE_INSTALL_LIBDIR=%{_libdir}
@@ -51,6 +48,9 @@ rm -f %{buildroot}%{_libdir}/lib%{name}.a
 %post libs -p /sbin/ldconfig
 
 %postun libs -p /sbin/ldconfig
+
+%check
+make test
 
 %files
 %doc AUTHORS
@@ -68,6 +68,10 @@ rm -f %{buildroot}%{_libdir}/lib%{name}.a
 
 
 %changelog
+* Fri Nov 20 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.3-1
+- update version to 0.0.3
+- add tests
+
 * Thu Oct  1 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.1-5
 - remove macros srcname and sum
 
