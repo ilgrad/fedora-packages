@@ -3,7 +3,7 @@
 
 Name: rubygem-%{gem_name}
 Version: 2.2.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Generic connection pool for Ruby
 Group: Development/Languages
 License: MIT
@@ -57,24 +57,28 @@ pushd .%{gem_instdir}
   ruby -Ilib -e 'Dir.glob "./test/test_*.rb", &method(:require)'
 popd
 
+
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.gitignore
-%exclude %{gem_instdir}/.travis.yml
-%{gem_instdir}/Changes.md
-%license %{gem_instdir}/LICENSE
+%doc %{gem_instdir}/README.md
+%doc %{gem_instdir}/Changes.md
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%license %{gem_instdir}/LICENSE
+%exclude %{gem_instdir}/.*
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
-%{gem_instdir}/connection_pool.gemspec
-%{gem_instdir}/test
+%exclude %{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/connection_pool.gemspec
+%exclude %{gem_instdir}/test
+%exclude %{gem_instdir}/Gemfile
+
 
 %changelog
+* Sat Dec 19 2015 Ilya Gradina <ilya.gradina@gmail.com> - 2.2.0-2
+- trivial fixes in spec
+
 * Tue Sep 29 2015 Ilya Gradina <ilya.gradina@gmail.com> - 2.2.0-1
 - Initial package
