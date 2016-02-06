@@ -5,8 +5,10 @@ Summary:       An encoding detector library ported from Mozilla
 
 License:       MPLv1.1
 URL:           https://github.com/BYVoid/%{name}
-Source0:       https://github.com/BYVoid/uchardet/archive/v%{version}.tar.gz
+Source0:       https://github.com/BYVoid/uchardet/archive/v%{version}/%{name}-%{version}.tar.gz
 
+BuildRequires: gcc
+BuildRequires: gcc-c++
 BuildRequires: cmake
 
 %description
@@ -16,56 +18,51 @@ detector library, which takes a sequence of bytes in an unknown character
 encoding without any additional information, and attempts to determine the
 encoding of the text.
 
+%package	devel
+Summary:        Development files for ${name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
-%package	libs
-Summary:        Libraries for uchardet
-
-%description	libs
-The uchardet-libs package contains shared libraries.
-
-%package	libs-devel
-Summary:        Development files for uchardet-libs
-Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
-
-%description	libs-devel
-The uchardet-libs-devel package contains headers and shared libraries
+%description	devel
+The %{name}-devel package contains headers and shared libraries
 for developing tools for uchardet.
 
-
 %prep
-%autosetup #-n %{name}-%{commit0}
+%autosetup
+mkdir build
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=%{_libdir}
-make %{?_smp_mflags} V=1
+pushd build
+  %cmake .. -DCMAKE_INSTALL_LIBDIR=%{_libdir}
+  %make_build
+popd
 
 %install
-%make_install
+pushd build
+  %make_install
+popd
 
 # remove static library
 rm -f %{buildroot}%{_libdir}/lib%{name}.a
 
-%post libs -p /sbin/ldconfig
-
-%postun libs -p /sbin/ldconfig
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %check
-make test
+pushd build
+  ctest -VV
+popd
 
 %files
+%license COPYING
 %doc AUTHORS
-%{license} COPYING
 %{_bindir}/%{name}
+%{_libdir}/lib%{name}.so.*
 %{_mandir}/man1/%{name}.1.*
 
-%files libs
-%{_libdir}/lib%{name}.so.*
-
-%files libs-devel
-%{_includedir}/%{name}
+%files devel
+%{_includedir}/%{name}/
 %{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
-
 
 %changelog
 * Sat Feb 6  2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.5-1
