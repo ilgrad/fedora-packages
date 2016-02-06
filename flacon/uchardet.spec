@@ -1,5 +1,5 @@
 Name:          uchardet
-Version:       0.0.3
+Version:       0.0.5
 Release:       1%{?dist}
 Summary:       An encoding detector library ported from Mozilla
 
@@ -68,6 +68,9 @@ make test
 
 
 %changelog
+* Sat Feb 6  2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.5-1
+- update version to 0.0.5
+
 * Fri Nov 20 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.0.3-1
 - update version to 0.0.3
 - add tests
