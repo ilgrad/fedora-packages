@@ -1,65 +1,94 @@
 Name:          flacon
-Version:       1.2.0
+Version:       2.0.1
 Release:       1%{?dist}
 Summary:       Audio File Encoder
 
-License:       LGPLv2.1
+License:       LGPLv2+
 URL:           https://flacon.github.io/
-Source0:       https://github.com/flacon/%{name}/archive/v%{version}.tar.gz
+Source0:       https://github.com/%{name}/%{name}/archive/v%{version}.tar.gz
 
-BuildRequires: cmake
+BuildRequires: %{_bindir}/desktop-file-validate
+BuildRequires: gcc-c++ cmake
+BuildRequires: qt5-linguist
+BuildRequires: qt5-qtbase-devel
 BuildRequires: uchardet-devel
-BuildRequires: pkgconfig(Qt5Widgets)
-BuildRequires: pkgconfig(Qt5Network)
-BuildRequires: qt5-qttools-devel
-BuildRequires: desktop-file-utils
 
-Requires: shntool
 Requires: flac
-Requires: wavpack
-Requires: vorbis-tools
-Requires: vorbisgain
 Requires: libfishsound
 Requires: opus-tools
+Requires: vorbisgain
+Requires: vorbis-tools
+Requires: shntool
+Requires: wavpack
 
 
 %description
 Flacon extracts individual tracks from one big audio file containing
-the entire album of music and saves them as separate audio files.
+the entire album of music and saves them as separate audio files. 
+To do this, it uses information from the appropriate CUE file. 
+Besides, Flacon makes it possible to conveniently revise or specify 
+tags both for all tracks at once or for each tag separately.
+
 
 %prep
-%setup -q
+%autosetup
+mkdir build
+
 
 %build
-%cmake .
-make %{?_smp_mflags}
+pushd build
+    %cmake .. \
+    -DBUILD_TESTS=Yes \
+    -DUSE_QT5=Yes \
+    %make_build
+popd
+
 
 %install
-%make_install
-%find_lang %{name} --with-qt
-desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+pushd build
+    %make_install
+    %find_lang %{name} --with-qt
+    desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+popd
+
 
 %post
-/usr/bin/update-desktop-database &> /dev/null ||
-/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+    %{_bindir}/update-desktop-database &> /dev/null ||
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+
 
 %postun
-/usr/bin/update-desktop-database &> /dev/null ||
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
-fi
+    %{_bindir}/update-desktop-database &> /dev/null ||
+    if [ $1 -eq 0 ] ; then
+      /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+      %{_bindir}/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
+    fi
+
 
 %posttrans
-/usr/bin/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
+    %{_bindir}/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
 
-%files -f %{name}.lang
+
+%check
+pushd build
+     ctest -VV
+popd
+
+
+%files 
+%doc README.md
+%license LICENSE
 %{_bindir}/%{name}
+%{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/*/%{name}.*
-%{_mandir}/man1/%{name}.1.gz
+%{_mandir}/man1/%{name}.1.*
 
 
 %changelog
+* Wed Apr 27 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.0.1-1
+- update to 2.0.1 
+- few small changes
+
 * Mon Sep 21 2015 Ilya Gradina <ilya.gradina@gmail.com> - 1.2.0-1
 - Initial package
