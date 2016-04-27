@@ -39,7 +39,7 @@ mkdir build
 pushd build
     %cmake .. \
     -DBUILD_TESTS=Yes \
-    -DUSE_QT5=Yes \
+    -DUSE_QT5=Yes
     %make_build
 popd
 
