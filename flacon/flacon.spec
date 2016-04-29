@@ -1,14 +1,14 @@
 Name:          flacon
 Version:       2.0.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Audio File Encoder
 
 License:       LGPLv2+
 URL:           https://flacon.github.io/
 Source0:       https://github.com/%{name}/%{name}/archive/v%{version}.tar.gz
 
-BuildRequires: %{_bindir}/desktop-file-validate
-BuildRequires: gcc-c++ cmake
+BuildRequires: desktop-file-utils
+BuildRequires: cmake
 BuildRequires: qt5-linguist
 BuildRequires: qt5-qtbase-devel
 BuildRequires: uchardet-devel
@@ -32,46 +32,45 @@ tags both for all tracks at once or for each tag separately.
 
 %prep
 %autosetup
-mkdir build
 
 
 %build
-pushd build
-    %cmake .. \
+mkdir -p %{_target_platform}
+pushd %{_target_platform}
+%cmake  \
     -DBUILD_TESTS=Yes \
-    -DUSE_QT5=Yes
-    %make_build
+    -DUSE_QT5=Yes \
+    ..
 popd
+make %{?_smp_mflags} -C %{_target_platform}
 
 
 %install
-pushd build
-    %make_install
-    %find_lang %{name} --with-qt
-    desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
-popd
+make install DESTDIR=%{buildroot} -C %{_target_platform}
+%find_lang %{name} --with-qt
 
 
 %post
-    %{_bindir}/update-desktop-database &> /dev/null ||
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+update-desktop-database &> /dev/null ||
+touch --no-create %{_datadir}/icons/hicolor &>/dev/null ||:
 
 
 %postun
-    %{_bindir}/update-desktop-database &> /dev/null ||
-    if [ $1 -eq 0 ] ; then
-      /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-      %{_bindir}/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
-    fi
+update-desktop-database &> /dev/null ||
+if [ $1 -eq 0 ] ; then 
+    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
+fi
 
 
 %posttrans
-    %{_bindir}/gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
+gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %check
-pushd build
-     ctest -VV
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+pushd %{_target_platform}
+    cd tests && ./flacon_test || :
 popd
 
 
@@ -86,6 +85,9 @@ popd
 
 
 %changelog
+* Sat Apr 30 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.0.1-2
+- changes in the file, thx Jiri Eischmann 1264715#c3
+
 * Wed Apr 27 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.0.1-1
 - update to 2.0.1 
 - few small changes
