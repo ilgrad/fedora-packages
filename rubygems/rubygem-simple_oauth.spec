@@ -1,28 +1,34 @@
 # Generated from simple_oauth-0.3.1.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name simple_oauth
 
-Name: rubygem-%{gem_name}
+Name:    rubygem-%{gem_name}
 Version: 0.3.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Simply builds and verifies OAuth headers
-Group: Development/Languages
+Group:   Development/Languages
 License: MIT
-URL: https://github.com/laserlemon/simple_oauth
+URL:     https://github.com/laserlemon/simple_oauth
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
+# git clone https://github.com/laserlemon/simple_oauth.git && cd simple_oauth
+# git checkout v0.3.1 && tar czvf simple_oauth-0.3.1-specs.tar.gz spec/
+Source1: %{gem_name}-%{version}-specs.tar.gz
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(rspec)
+BuildRequires: rubygem(simplecov)
+BuildRequires: rubygem(coveralls)
+BuildRequires: rubygem(backports)
 BuildArch: noarch
+
 
 %description
 Simply builds and verifies OAuth headers.
 
 
 %package doc
-Summary: Documentation for %{name}
-Group: Documentation
-Requires: %{name} = %{version}-%{release}
+Summary:   Documentation for %{name}
+Group:     Documentation
+Requires:  %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description doc
@@ -49,30 +55,34 @@ cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
 
-
-
 # Run the test suite
 %check
 pushd .%{gem_instdir}
+  tar xzf %{SOURCE1}
   rspec -Ilib spec
 popd
 
+
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.*
+%doc %{gem_instdir}/README.md
+%doc %{gem_instdir}/CONTRIBUTING.md
 %license %{gem_instdir}/LICENSE.md
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
-%doc %{gem_instdir}/CONTRIBUTING.md
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
-%exclude %{gem_instdir}/simple_oauth.gemspec
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/%{gem_name}.gemspec
 
 %changelog
+* Sat Apr 30 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.1-2
+- few small changes
+- add tests
+
 * Fri Oct 02 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.1-1
 - Initial package
