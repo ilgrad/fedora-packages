@@ -1,6 +1,6 @@
 Name:          flacon
 Version:       2.0.1
-Release:       3%{?dist}
+Release:       4%{?dist}
 Summary:       Audio File Encoder
 
 License:       LGPLv2+
@@ -16,7 +16,6 @@ BuildRequires: qt5-qtbase-devel
 BuildRequires: uchardet-devel
 
 Requires: flac
-Requires: libfishsound
 Requires: opus-tools
 Requires: vorbisgain
 Requires: vorbis-tools
@@ -91,6 +90,10 @@ gtk-update-icon-cache -f %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
+* Tue May 10 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.0.1-4
+- remove the requires libfishsound
+- changes in the appdata.xml file
+
 * Sat May  7 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.0.1-3
 - added xml file
 

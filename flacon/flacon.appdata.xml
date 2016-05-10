@@ -26,16 +26,10 @@
 	</description>
 	<keywords>cue,extract,track,music,sound,tag</keywords>
 	<url type="homepage">https://flacon.github.io</url>
-	<screenshots>
-		<screenshot type="default">
-                <image width="1280" height="720">https://github.com/ilgrad/fedora-packages/raw/master/flacon/flacon1.png</image>
-                </screenshot>
-                <screenshot type="default">
-                <image width="1280" height="720">https://github.com/ilgrad/fedora-packages/raw/master/flacon/flacon2.png</image>
-                </screenshot>
-                <screenshot type="default">
-                <image width="1280" height="720">https://github.com/ilgrad/fedora-packages/raw/master/flacon/flacon3.png</image>
-                </screenshot>
+        <screenshots>
+		<screenshot type="default">https://github.com/ilgrad/fedora-packages/raw/master/flacon/flacon1.png</screenshot>
+                <screenshot>https://github.com/ilgrad/fedora-packages/raw/master/flacon/flacon2.png</screenshot>
+                <screenshot>https://github.com/ilgrad/fedora-packages/raw/master/flacon/flacon3.png</screenshot>
 	</screenshots>
 	<updatecontact>ilya.gradina@gmail.com</updatecontact>
 </application>
