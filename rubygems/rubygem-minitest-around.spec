@@ -3,7 +3,7 @@
 
 Name: rubygem-%{gem_name}
 Version: 0.3.2
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Around block for minitest
 Group: Development/Languages
 License: MIT
@@ -11,7 +11,6 @@ URL: https://github.com/splattael/minitest-around
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(cucumber)
 BuildRequires: rubygem(minitest)
 BuildArch: noarch
@@ -56,29 +55,31 @@ cp -a .%{gem_dir}/* \
 %check
 pushd .%{gem_instdir}
   sed -i "/require 'bundler/ s/^/#/" test/helper.rb
-  ruby -Ilib -e 'Dir.glob "./test/*test.rb", &method(:require)'
+  ruby -Ilib -e 'Dir.glob "./test/*_test.rb", &method(:require)'
 popd
 
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.gitignore
-%exclude %{gem_instdir}/.travis.yml
+%doc %{gem_instdir}/README.md
 %license %{gem_instdir}/LICENSE
 %{gem_instdir}/config
 %{gem_instdir}/features
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/examples
 %exclude %{gem_instdir}/minitest-around.gemspec
 %exclude %{gem_instdir}/test
 
 %changelog
+* Tue Aug 16 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.2-2
+- changes in files hierarchy
+
 * Tue Sep 29 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.2-1
 - Initial package
