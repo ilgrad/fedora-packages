@@ -3,7 +3,7 @@
 
 Name:    rubygem-%{gem_name}
 Version: 0.3.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Simply builds and verifies OAuth headers
 Group:   Development/Languages
 License: MIT
@@ -15,15 +15,12 @@ Source1: %{gem_name}-%{version}-specs.tar.gz
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(rspec)
-BuildRequires: rubygem(simplecov)
-BuildRequires: rubygem(coveralls)
 BuildRequires: rubygem(backports)
 BuildArch: noarch
 
 
 %description
 Simply builds and verifies OAuth headers.
-
 
 %package doc
 Summary:   Documentation for %{name}
@@ -59,6 +56,9 @@ cp -a .%{gem_dir}/* \
 %check
 pushd .%{gem_instdir}
   tar xzf %{SOURCE1}
+  sed -i '/simplecov/,/coveralls/ s/^/#/' spec/helper.rb
+  sed -i '/SimpleCov\.formatter/ s/^/#/' spec/helper.rb
+  sed -i '/SimpleCov\.start/,/end/ s/^/#/' spec/helper.rb
   rspec -Ilib spec
 popd
 
@@ -80,6 +80,9 @@ popd
 %exclude %{gem_instdir}/%{gem_name}.gemspec
 
 %changelog
+* Tue Aug 16 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.1-3
+- remove the coverage dependencies (simplecov and coveralls)
+
 * Sat Apr 30 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.1-2
 - few small changes
 - add tests
