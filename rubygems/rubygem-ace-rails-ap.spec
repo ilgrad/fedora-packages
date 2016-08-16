@@ -2,7 +2,7 @@
 %global gem_name ace-rails-ap
 
 Name: rubygem-%{gem_name}
-Version: 4.0.0
+Version: 4.1.0
 Release: 1%{?dist}
 Summary: The Ajax.org Cloud9 Editor (Ace) for the Rails 3.1 asset pipeline
 Group: Development/Languages
@@ -11,9 +11,6 @@ URL: https://github.com/codykrieger/ace-rails-ap
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
-BuildRequires: rubygem(bundler)
-BuildRequires: rubygem(rails)
 BuildArch: noarch
 
 %description
@@ -50,32 +47,26 @@ cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
 
-
-
-# Run the test suite
-%check
-pushd .%{gem_instdir}
-
-popd
-
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.gitignore
-%exclude %{gem_instdir}/.gitmodules
+%doc %{gem_instdir}/README.md
 %license %{gem_instdir}/LICENSE
 %{gem_libdir}
-%exclude %{gem_instdir}/update.sh
-%{gem_instdir}/vendor
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_instdir}/update.sh
+%exclude %{gem_instdir}/vendor
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
-%{gem_instdir}/ace-rails-ap.gemspec
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/%{gem_name}.gemspec
 
 %changelog
+* Tue Aug 16 2016 Ilya Gradina <ilya.gradina@gmail.com> - 4.1.0-1
+- update to new version 4.1.0
+
 * Fri Sep 18 2015 Ilya Gradina <ilya.gradina@gmail.com> - 4.0.0-1
 - Initial package
