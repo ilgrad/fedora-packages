@@ -1,8 +1,7 @@
-# Generated from enumerize-1.0.0.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name enumerize
 
 Name: rubygem-%{gem_name}
-Version: 1.0.0
+Version: 2.0.0
 Release: 1%{?dist}
 Summary: Enumerated attributes with I18n and ActiveRecord/Mongoid/MongoMapper support
 Group: Development/Languages
@@ -12,10 +11,9 @@ Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(activesupport)
-BuildRequires: rubygem(formtastic)
 BuildRequires: rubygem(rails)
-BuildRequires: rubygem(activemodel)
-BuildRequires: rubygem(simple_form)
+BuildRequires: rubygem(rspec)
+BuildRequires: rubygem(sqlite3)
 BuildArch: noarch
 
 %description
@@ -53,32 +51,33 @@ cp -a .%{gem_dir}/* \
 
 
 
-
 # Run the test suite
 %check
 pushd .%{gem_instdir}
-  ruby -Ilib -e 'Dir.glob "./test/test_*.rb", &method(:require)'
+  rspec -Ilib spec
 popd
 
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.*
+%doc %{gem_instdir}/README.md
 %license %{gem_instdir}/MIT-LICENSE
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
 %doc %{gem_instdir}/CHANGELOG.md
-%{gem_instdir}/Gemfile
-%{gem_instdir}/Gemfile.mongo_mapper
-%{gem_instdir}/Gemfile.rails40
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Gemfile*
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/enumerize.gemspec
 %exclude %{gem_instdir}/test
+%exclude %{gem_instdir}/spec
 
 %changelog
+* Wed Aug 24 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.0.0-1
+- update to 2.0.0
+
 * Wed Sep 30 2015 Ilya Gradina <ilya.gradina@gmail.com> - 1.0.0-1
 - Initial package
