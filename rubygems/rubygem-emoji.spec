@@ -1,8 +1,7 @@
-# Generated from emoji-1.0.5.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name emoji
 
 Name: rubygem-%{gem_name}
-Version: 1.0.5
+Version: 1.0.7
 Release: 1%{?dist}
 Summary: A Ruby gem. For emoji.
 Group: Development/Languages
@@ -11,7 +10,6 @@ URL: http://github.com/wpeterson/emoji
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(minitest)
 BuildArch: noarch
 
@@ -52,33 +50,36 @@ cp -a .%{gem_dir}/* \
 
 
 
-
 # Run the test suite
 %check
 pushd .%{gem_instdir}
+  export LC_CTYPE=en_US.UTF-8
   sed -i "/require 'bundler/ s/^/#/" test/test_helper.rb
-  ruby -Ilib -e 'Dir.glob "./test/test_*.rb", &method(:require)'
+  ruby -Ilib -e 'Dir.glob "./test/*_test.rb", &method(:require)'
 popd
 
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.*
+%doc %{gem_instdir}/README.md
 %license %{gem_instdir}/LICENSE.txt
 %{gem_instdir}/assets
 %{gem_instdir}/config
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_cache}
+%exclude %{gem_instdir}/.*
 
 %files doc
 %doc %{gem_docdir}
 %doc %{gem_instdir}/CHANGELOG.md
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/emoji.gemspec
 %exclude %{gem_instdir}/test
 
 %changelog
+* Wed Aug 24 2016 Ilya Gradina <ilya.gradina@gmail.com> - 1.0.7-1
+- update to 1.0.7
+
 * Wed Sep 30 2015 Ilya Gradina <ilya.gradina@gmail.com> - 1.0.5-1
 - Initial package
