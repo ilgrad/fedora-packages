@@ -1,9 +1,8 @@
-# Generated from email_validator-1.6.0.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name email_validator
 
 Name: rubygem-%{gem_name}
 Version: 1.6.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: An email validator for Rails 3+
 Group: Development/Languages
 License: MIT
@@ -11,7 +10,6 @@ URL: https://github.com/balexand/email_validator
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(rspec)
 BuildRequires: rubygem(activemodel)
 BuildArch: noarch
@@ -51,8 +49,6 @@ cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
 
-
-
 # Run the test suite
 %check
 pushd .%{gem_instdir}
@@ -61,22 +57,25 @@ popd
 
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.*
-%{gem_instdir}/Changes.md
+%doc %{gem_instdir}/README.md
 %license %{gem_instdir}/LICENSE
+%{gem_instdir}/Changes.md
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
-%doc %{gem_instdir}/.*
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %doc %{gem_instdir}/.*
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/email_validator.gemspec
 %exclude %{gem_instdir}/spec
 
 %changelog
+* Fri Aug 26 2016 Ilya Gradina <ilya.gradina@gmail.com> - 1.6.0-2
+- small changes in files section
+
 * Wed Sep 30 2015 Ilya Gradina <ilya.gradina@gmail.com> - 1.6.0-1
 - Initial package
