@@ -1,8 +1,7 @@
-# Generated from d3_rails-3.5.6.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name d3_rails
 
 Name: rubygem-%{gem_name}
-Version: 3.5.6
+Version: 4.1.1
 Release: 1%{?dist}
 Summary: D3 automated install for Rails 3.1+
 Group: Development/Languages
@@ -11,7 +10,8 @@ URL: https://github.com/logical42/d3_rails
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
+BuildRequires: rubygem(rails)
+BuildRequires: rubygem(pry)
 BuildArch: noarch
 
 %description
@@ -51,21 +51,22 @@ cp -a .%{gem_dir}/* \
 
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.*
-%license %{gem_instdir}/LICENSE
+%doc %{gem_instdir}/README.md
+%license %{gem_instdir}/LICENSE                                                                                                                   
 %license %{gem_instdir}/MIT_LICENSE
-%{gem_instdir}/app
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_instdir}/app
+%exclude %{gem_instdir}/tasks
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/d3_rails.gemspec
 
 %changelog
-* Tue Sep 29 2015 Ilya Gradina <ilya.gradina@gmail.com> - 3.5.6-1
+* Tue Aug 30 2016 Ilya Gradina <ilya.gradina@gmail.com> - 4.1.1-1
 - Initial package
