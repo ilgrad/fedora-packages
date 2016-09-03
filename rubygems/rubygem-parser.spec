@@ -1,8 +1,7 @@
-# Generated from parser-2.2.2.6.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name parser
 
 Name: rubygem-%{gem_name}
-Version: 2.2.2.6
+Version: 2.3.1.2
 Release: 1%{?dist}
 Summary: A Ruby parser written in pure Ruby
 Group: Development/Languages
@@ -11,11 +10,10 @@ URL: https://github.com/whitequark/parser
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
+BuildRequires: rubygem(ast)
 BuildRequires: rubygem(minitest)
 BuildRequires: rubygem(simplecov)
 BuildRequires: rubygem(coveralls)
-BuildRequires: rubygem(ast)
 BuildArch: noarch
 
 %description
@@ -61,31 +59,35 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 # Run the test suite
 %check
 pushd .%{gem_instdir}
-  ruby -Ilib -e 'Dir.glob "./test/helper.rb", &method(:require)'
+  ruby -I test test/test_*.rb
 popd
 
 %files
 %dir %{gem_instdir}
+%doc %{gem_instdir}/README.md
+%doc %{gem_instdir}/CHANGELOG.md
+%doc %{gem_instdir}/CONTRIBUTING.md
 %{_bindir}/ruby-parse
 %{_bindir}/ruby-rewrite
 %exclude %{gem_instdir}/.*
 %license %{gem_instdir}/LICENSE.txt
 %{gem_instdir}/bin
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_cache}
+%exclude %{gem_instdir}/.*
 
 %files doc
 %doc %{gem_docdir}
-%doc %{gem_instdir}/CHANGELOG.md
-%doc %{gem_instdir}/CONTRIBUTING.md
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
 %doc %{gem_instdir}/doc
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/parser.gemspec
 %exclude %{gem_instdir}/test
 
 %changelog
+* Sat Sep 03 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.3.1.2-1
+- update to 2.3.1.2
+
 * Mon Oct 05 2015 Ilya Gradina <ilya.gradina@gmail.com> - 2.2.2.6-1
 - Initial package
