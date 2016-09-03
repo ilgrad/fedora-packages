@@ -1,21 +1,24 @@
-# Generated from ast-2.1.0.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name ast
 
 Name: rubygem-%{gem_name}
-Version: 2.1.0
+Version: 2.3.0
 Release: 1%{?dist}
 Summary: A library for working with Abstract Syntax Trees
 Group: Development/Languages
 License: MIT
-URL: https://whitequark.github.io/ast/
+URL: https://github.com/whitequark/ast
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(bacon)
 BuildRequires: rubygem(bacon-colored_output)
 BuildRequires: rubygem(simplecov)
 BuildRequires: rubygem(coveralls)
+BuildRequires: rubygem(json_pure)
+BuildRequires: rubygem(mime-types)
+BuildRequires: rubygem(rest-client)
+BuildRequires: rubygem(yard)
+BuildRequires: rubygem(kramdown)
 BuildArch: noarch
 
 %description
@@ -57,27 +60,30 @@ cp -a .%{gem_dir}/* \
 # Run the test suite
 %check
 pushd .%{gem_instdir}
-  ruby -Ilib -e 'Dir.glob "./test/helper.rb", &method(:require)'
+  bacon -Itest -a test/test_*.rb
 popd
 
 %files
 %dir %{gem_instdir}
-%exclude %{gem_instdir}/.*
+%doc %{gem_instdir}/README.YARD.md
+%doc %{gem_instdir}/README.md
+%doc %{gem_instdir}/CHANGELOG.md
 %license %{gem_instdir}/LICENSE.MIT
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
-%doc %{gem_instdir}/CHANGELOG.md
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.YARD.md
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/ast.gemspec
 %exclude %{gem_instdir}/test
 
 %changelog
+* Sat Sep 03 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.3.0-1
+- update to 2.3.0
+
 * Mon Oct 05 2015 Ilya Gradina <ilya.gradina@gmail.com> - 2.1.0-1
 - Initial package
