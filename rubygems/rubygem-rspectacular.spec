@@ -12,6 +12,7 @@ Source1: https://github.com/thekompanee/rspectacular/blob/master/LICENSE
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(rspec)
+BuildRequires: rubygem(fuubar)
 BuildArch: noarch
 
 %description
