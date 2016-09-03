@@ -1,17 +1,15 @@
-# Generated from bacon-colored_output-1.0.1.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name bacon-colored_output
 
 Name: rubygem-%{gem_name}
 Version: 1.0.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Colored output for Bacon test framework! http://i.imgur.com/EpTpw.png
 Group: Development/Languages
 License: MIT
-URL: https://github.com/whitequark/bacon-colored_output
+URL: https://github.com/whitequark/bacon-colored_output 
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(bacon)
 BuildArch: noarch
 
@@ -49,9 +47,9 @@ cp -a .%{gem_dir}/* \
         %{buildroot}%{gem_dir}/
 
 
-
 %files
 %dir %{gem_instdir}
+%doc %{gem_instdir}/README.md
 %exclude %{gem_instdir}/.*
 %license %{gem_instdir}/LICENSE.txt
 %{gem_libdir}
@@ -60,11 +58,13 @@ cp -a .%{gem_dir}/* \
 
 %files doc
 %doc %{gem_docdir}
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/bacon-colored_output.gemspec
 
 %changelog
+* Sat Sep 03 2016 Ilya Gradina <ilya.gradina@gmail.com> - 1.0.1-2
+- changes in files
+
 * Mon Oct 05 2015 Ilya Gradina <ilya.gradina@gmail.com> - 1.0.1-1
 - Initial package
