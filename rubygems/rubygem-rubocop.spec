@@ -1,20 +1,26 @@
-# Generated from rubocop-0.34.2.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name rubocop
 
 Name: rubygem-%{gem_name}
-Version: 0.34.2
+Version: 0.42.0
 Release: 1%{?dist}
 Summary: Automatic Ruby code style checking tool
 Group: Development/Languages
 License: MIT
 URL: http://github.com/bbatsov/rubocop
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
+# git clone https://github.com/bbatsov/rubocop.git && cd rubocop
+# git checkout v0.42.0 && tar czvf rubocop-0.42.0-specs.tar.gz spec/
+Source1: %{gem_name}-%{version}-specs.tar.gz
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby >= 1.9.3
 BuildRequires: rubygem(rspec)
-BuildRequires: rubygem(yard)
+BuildRequires: rubygem(rainbow)
+BuildRequires: rubygem(parser)
 BuildRequires: rubygem(simplecov)
+BuildRequires: rubygem(webmock)
+BuildRequires: rubygem(powerpack)
+BuildRequires: rubygem(unicode-display_width)
+BuildRequires: rubygem(ruby-progressbar)
 BuildArch: noarch
 
 %description
@@ -61,30 +67,28 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 # Run the test suite
 %check
 pushd .%{gem_instdir}
+  tar xzf %{SOURCE1}
   rspec -Ilib spec
-popd
+ppd
 
 %files
 %dir %{gem_instdir}
+%doc %{gem_instdir}/README.md
 %{_bindir}/rubocop
-%exclude %{gem_instdir}/.*
 %license %{gem_instdir}/LICENSE.txt
 %{gem_instdir}/assets
 %{gem_instdir}/bin
 %{gem_instdir}/config
 %{gem_libdir}
-%{gem_instdir}/logo
-%{gem_instdir}/relnotes
 %exclude %{gem_cache}
 %{gem_spec}
 
 %files doc
 %doc %{gem_docdir}
-%doc %{gem_instdir}/CHANGELOG.md
-%doc %{gem_instdir}/CONTRIBUTING.md
-%doc %{gem_instdir}/README.md
-%exclude %{gem_instdir}/rubocop.gemspec
 
 %changelog
+* Fri Sep 02 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.42.0-1
+- update to 0.42.0
+
 * Mon Oct 05 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.34.2-1
 - Initial package
