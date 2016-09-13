@@ -1,9 +1,8 @@
-# Generated from powerpack-0.1.1.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name powerpack
 
 Name: rubygem-%{gem_name}
 Version: 0.1.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A few useful extensions to core Ruby classes
 Group: Development/Languages
 License: MIT
@@ -11,7 +10,6 @@ URL: https://github.com/bbatsov/powerpack
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(rspec)
 BuildRequires: rubygem(yard)
 BuildArch: noarch
@@ -60,6 +58,8 @@ popd
 
 %files
 %dir %{gem_instdir}
+%doc %{gem_instdir}/README.md
+%doc %{gem_instdir}/CHANGELOG.md
 %exclude %{gem_instdir}/.*
 %license %{gem_instdir}/LICENSE.txt
 %{gem_libdir}
@@ -68,13 +68,14 @@ popd
 
 %files doc
 %doc %{gem_docdir}
-%doc %{gem_instdir}/CHANGELOG.md
-%{gem_instdir}/Gemfile
-%doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/powerpack.gemspec
 %exclude %{gem_instdir}/spec
 
 %changelog
+* Sat Sep 03 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.1.1-2
+- changes in files
+
 * Mon Oct 05 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.1.1-1
 - Initial package
