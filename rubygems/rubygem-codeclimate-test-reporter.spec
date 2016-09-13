@@ -1,18 +1,22 @@
-# Generated from codeclimate-test-reporter-0.4.8.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name codeclimate-test-reporter
 
 Name: rubygem-%{gem_name}
-Version: 0.4.8
+Version: 0.6.0
 Release: 1%{?dist}
 Summary: Uploads Ruby test coverage data to Code Climate
 Group: Development/Languages
 License: MIT
 URL: https://github.com/codeclimate/ruby-test-reporter
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
+# git clone https://github.com/codeclimate/ruby-test-reporter.git && cd ruby-test-reporter
+# git checkout v0.6.0 && tar czvf codeclimate-test-reporter-0.6.0-specs.tar.gz spec/
+Source1: %{gem_name}-%{version}-specs.tar.gz
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby >= 1.9
 BuildRequires: rubygem(rspec)
+BuildRequires: rubygem(webmock)
+BuildRequires: rubygem(pry)
+BuildRequires: rubygem(simplecov)
 BuildArch: noarch
 
 %description
@@ -59,11 +63,15 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 # Run the test suite
 %check
 pushd .%{gem_instdir}
+  tar xzf %{SOURCE1}
+  sed -i '/bundler/ s/^/#/' spec/spec_helper.rb
   rspec -Ilib spec
+  rm -rf spec
 popd
 
 %files
 %dir %{gem_instdir}
+%doc %{gem_instdir}/README.md
 %{_bindir}/cc-tddium-post-worker
 %license %{gem_instdir}/LICENSE.txt
 %{gem_instdir}/bin
@@ -74,8 +82,11 @@ popd
 
 %files doc
 %doc %{gem_docdir}
-%doc %{gem_instdir}/README.md
+
 
 %changelog
+* Wed Sep 14 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.6.0-1
+- update to 0.6.0
+
 * Wed Sep 30 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.4.8-1
 - Initial package
