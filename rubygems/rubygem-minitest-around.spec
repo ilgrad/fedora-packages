@@ -1,9 +1,8 @@
-# Generated from minitest-around-0.3.2.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name minitest-around
 
 Name: rubygem-%{gem_name}
-Version: 0.3.2
-Release: 2%{?dist}
+Version: 0.4.0
+Release: 1%{?dist}
 Summary: Around block for minitest
 Group: Development/Languages
 License: MIT
@@ -11,7 +10,6 @@ URL: https://github.com/splattael/minitest-around
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: rubygem(cucumber)
 BuildRequires: rubygem(minitest)
 BuildArch: noarch
 
@@ -62,8 +60,6 @@ popd
 %dir %{gem_instdir}
 %doc %{gem_instdir}/README.md
 %license %{gem_instdir}/LICENSE
-%{gem_instdir}/config
-%{gem_instdir}/features
 %{gem_libdir}
 %{gem_spec}
 %exclude %{gem_instdir}/.*
@@ -71,6 +67,8 @@ popd
 
 %files doc
 %doc %{gem_docdir}
+%exclude %{gem_instdir}/config
+%exclude %{gem_instdir}/features
 %exclude %{gem_instdir}/Gemfile
 %exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/examples
@@ -78,6 +76,9 @@ popd
 %exclude %{gem_instdir}/test
 
 %changelog
+* Sat Nov 05 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.4.0-1
+- update to 0.4.0
+
 * Tue Aug 16 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.2-2
 - changes in files hierarchy
 
