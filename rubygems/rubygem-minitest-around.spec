@@ -2,7 +2,7 @@
 
 Name: rubygem-%{gem_name}
 Version: 0.4.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Around block for minitest
 Group: Development/Languages
 License: MIT
@@ -11,6 +11,7 @@ Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(minitest)
+BuildRequires: rubygem(cucumber)
 BuildArch: noarch
 
 %description
@@ -53,7 +54,9 @@ cp -a .%{gem_dir}/* \
 %check
 pushd .%{gem_instdir}
   sed -i "/require 'bundler/ s/^/#/" test/helper.rb
-  ruby -Ilib -e 'Dir.glob "./test/*_test.rb", &method(:require)'
+  RUBYOPT=-Ilib ruby -e 'Dir.glob "./test/*_{test,spec}.rb", &method(:require)'
+  RUBYOPT=-Ilib cucumber --tag ~@todo --tag ~@rspec
+  RUBYOPT=-Ilib rdoc --all --markup markdown
 popd
 
 %files
@@ -76,6 +79,9 @@ popd
 %exclude %{gem_instdir}/test
 
 %changelog
+* Tue Nov 08 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.4.0-2
+- fix tests
+ 
 * Sat Nov 05 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.4.0-1
 - update to 0.4.0
 
