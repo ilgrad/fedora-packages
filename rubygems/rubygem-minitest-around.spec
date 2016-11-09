@@ -2,7 +2,7 @@
 
 Name: rubygem-%{gem_name}
 Version: 0.4.0
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Around block for minitest
 Group: Development/Languages
 License: MIT
@@ -56,7 +56,6 @@ pushd .%{gem_instdir}
   sed -i "/require 'bundler/ s/^/#/" test/helper.rb
   RUBYOPT=-Ilib ruby -e 'Dir.glob "./test/*_{test,spec}.rb", &method(:require)'
   RUBYOPT=-Ilib cucumber --tag ~@todo --tag ~@rspec
-  RUBYOPT=-Ilib rdoc --all --markup markdown
 popd
 
 %files
@@ -79,6 +78,9 @@ popd
 %exclude %{gem_instdir}/test
 
 %changelog
+* Thu Nov 10 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.4.0-3
+- change in check section
+
 * Tue Nov 08 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.4.0-2
 - fix tests
  
