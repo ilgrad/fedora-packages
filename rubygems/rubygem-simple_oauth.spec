@@ -1,4 +1,3 @@
-# Generated from simple_oauth-0.3.1.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name simple_oauth
 
 Name:    rubygem-%{gem_name}
