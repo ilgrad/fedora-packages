@@ -1,7 +1,7 @@
 %global gem_name codeclimate-test-reporter
 
 Name: rubygem-%{gem_name}
-Version: 0.6.0
+Version: 1.0.8
 Release: 1%{?dist}
 Summary: Uploads Ruby test coverage data to Code Climate
 Group: Development/Languages
@@ -9,7 +9,7 @@ License: MIT
 URL: https://github.com/codeclimate/ruby-test-reporter
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 # git clone https://github.com/codeclimate/ruby-test-reporter.git && cd ruby-test-reporter
-# git checkout v0.6.0 && tar czvf codeclimate-test-reporter-0.6.0-specs.tar.gz spec/
+# git checkout v1.0.8 && tar czvf codeclimate-test-reporter-1.0.8-specs.tar.gz spec/
 Source1: %{gem_name}-%{version}-specs.tar.gz
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
@@ -17,6 +17,7 @@ BuildRequires: rubygem(rspec)
 BuildRequires: rubygem(webmock)
 BuildRequires: rubygem(pry)
 BuildRequires: rubygem(simplecov)
+BuildRequires: git
 BuildArch: noarch
 
 %description
@@ -26,7 +27,6 @@ Climate's hosted, automated code review service. Based on SimpleCov.
 
 %package doc
 Summary: Documentation for %{name}
-Group: Documentation
 Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
@@ -65,6 +65,7 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 pushd .%{gem_instdir}
   tar xzf %{SOURCE1}
   sed -i '/bundler/ s/^/#/' spec/spec_helper.rb
+  git init
   rspec -Ilib spec
   rm -rf spec
 popd
@@ -73,18 +74,22 @@ popd
 %dir %{gem_instdir}
 %doc %{gem_instdir}/README.md
 %{_bindir}/cc-tddium-post-worker
+%{_bindir}/codeclimate-test-reporter
 %license %{gem_instdir}/LICENSE.txt
-%{gem_instdir}/bin
-%{gem_instdir}/config
+%exclude %{gem_instdir}/bin
+%exclude %{gem_instdir}/config
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
 
 
 %changelog
+* Mon Jul 10 2017 Ilya Gradina <ilya.gradina@gmail.com> - 1.0.8-1
+- update to 1.0.8
+
 * Wed Sep 14 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.6.0-1
 - update to 0.6.0
 
