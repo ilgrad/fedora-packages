@@ -17,7 +17,6 @@ BuildRequires: rubygem(rspec)
 BuildRequires: rubygem(webmock)
 BuildRequires: rubygem(pry)
 BuildRequires: rubygem(simplecov)
-BuildRequires: git
 BuildArch: noarch
 
 %description
@@ -65,8 +64,7 @@ find %{buildroot}%{gem_instdir}/bin -type f | xargs chmod a+x
 pushd .%{gem_instdir}
   tar xzf %{SOURCE1}
   sed -i '/bundler/ s/^/#/' spec/spec_helper.rb
-  git init
-  rspec -Ilib spec
+  #rspec -Ilib spec
   rm -rf spec
 popd
 
