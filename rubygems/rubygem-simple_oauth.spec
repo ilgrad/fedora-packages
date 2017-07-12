@@ -14,7 +14,6 @@ Source1: %{gem_name}-%{version}-specs.tar.gz
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(rspec)
-BuildRequires: rubygem(backports)
 BuildArch: noarch
 
 
