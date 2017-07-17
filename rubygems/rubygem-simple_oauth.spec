@@ -2,7 +2,7 @@
 
 Name:    rubygem-%{gem_name}
 Version: 0.3.1
-Release: 3%{?dist}
+Release: 1%{?dist}
 Summary: Simply builds and verifies OAuth headers
 Group:   Development/Languages
 License: MIT
@@ -11,6 +11,7 @@ Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 # git clone https://github.com/laserlemon/simple_oauth.git && cd simple_oauth
 # git checkout v0.3.1 && tar czvf simple_oauth-0.3.1-specs.tar.gz spec/
 Source1: %{gem_name}-%{version}-specs.tar.gz
+BuildRequires: ruby
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(rspec)
@@ -63,27 +64,20 @@ popd
 
 %files
 %dir %{gem_instdir}
-%doc %{gem_instdir}/README.md
-%doc %{gem_instdir}/CONTRIBUTING.md
 %license %{gem_instdir}/LICENSE.md
 %{gem_libdir}
 %{gem_spec}
 %exclude %{gem_instdir}/.*
 %exclude %{gem_cache}
+%exclude %{gem_instdir}/%{gem_name}.gemspec
 
 %files doc
 %doc %{gem_docdir}
-%exclude %{gem_instdir}/Gemfile
-%exclude %{gem_instdir}/Rakefile
-%exclude %{gem_instdir}/%{gem_name}.gemspec
+%doc %{gem_instdir}/README.md
+%doc %{gem_instdir}/CONTRIBUTING.md
+%{gem_instdir}/Gemfile
+%{gem_instdir}/Rakefile
 
 %changelog
-* Tue Aug 16 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.1-3
-- remove the coverage dependencies (simplecov and coveralls)
-
-* Sat Apr 30 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.1-2
-- few small changes
-- add tests
-
 * Fri Oct 02 2015 Ilya Gradina <ilya.gradina@gmail.com> - 0.3.1-1
 - Initial package
