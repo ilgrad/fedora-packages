@@ -1,8 +1,8 @@
 %global gem_name bacon-colored_output
 
 Name: rubygem-%{gem_name}
-Version: 1.0.1
-Release: 2%{?dist}
+Version: 1.1.1
+Release: 1%{?dist}
 Summary: Colored output for Bacon test framework! http://i.imgur.com/EpTpw.png
 Group: Development/Languages
 License: MIT
@@ -63,6 +63,9 @@ cp -a .%{gem_dir}/* \
 %exclude %{gem_instdir}/bacon-colored_output.gemspec
 
 %changelog
+* Fri Jul 28 2017 Ilya Gradina <ilya.gradina@gmail.com> - 1.1.1-1
+- update to 1.1.1
+
 * Sat Sep 03 2016 Ilya Gradina <ilya.gradina@gmail.com> - 1.0.1-2
 - changes in files
 
