@@ -2,12 +2,14 @@
 
 Name: rubygem-%{gem_name}
 Version: 0.1.1
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A few useful extensions to core Ruby classes
-Group: Development/Languages
 License: MIT
 URL: https://github.com/bbatsov/powerpack
-Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
+# git clone git@github.com:bbatsov/powerpack.git
+# cd powerpack && git checkout 649d4553f5752928c7c2ae36c42ff176c93b2940
+# gem build powerpack.gemspec
+Source0: %{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(rspec)
@@ -20,7 +22,6 @@ A few useful extensions to core Ruby classes.
 
 %package doc
 Summary: Documentation for %{name}
-Group: Documentation
 Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
@@ -60,6 +61,7 @@ popd
 %dir %{gem_instdir}
 %doc %{gem_instdir}/README.md
 %doc %{gem_instdir}/CHANGELOG.md
+%doc %{gem_instdir}/CONTRIBUTING.md
 %exclude %{gem_instdir}/.*
 %license %{gem_instdir}/LICENSE.txt
 %{gem_libdir}
@@ -74,6 +76,9 @@ popd
 %exclude %{gem_instdir}/spec
 
 %changelog
+* Fri Jul 28 2017 Ilya Gradina <ilya.gradina@gmail.com> - 0.1.1-3
+- new version from commit(Fixing the tests and the definition of sum)
+
 * Sat Sep 03 2016 Ilya Gradina <ilya.gradina@gmail.com> - 0.1.1-2
 - changes in files
 
