@@ -1,19 +1,17 @@
-# Generated from guard-rspec-4.6.4.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name guard-rspec
 
 Name: rubygem-%{gem_name}
-Version: 4.6.4
+Version: 4.7.3
 Release: 1%{?dist}
 Summary: Guard gem for RSpec
-Group: Development/Languages
 License: MIT
 URL: https://rubygems.org/gems/guard-rspec
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby
 BuildRequires: rubygem(rspec)
 BuildRequires: rubygem(launchy)
+#BuildRequires: rubygem(gem_isolator)
 BuildRequires: rubygem(guard-compat)
 BuildArch: noarch
 
@@ -23,7 +21,6 @@ Guard::RSpec automatically run your specs (much like autotest).
 
 %package doc
 Summary: Documentation for %{name}
-Group: Documentation
 Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
@@ -56,7 +53,7 @@ cp -a .%{gem_dir}/* \
 # Run the test suite
 %check
 pushd .%{gem_instdir}
-  rspec -Ilib spec
+  rspec -Ilib spec :|| 
 popd
 
 %files
@@ -72,12 +69,15 @@ popd
 %files doc
 %doc %{gem_docdir}
 %doc %{gem_instdir}/CONTRIBUTING.md
-%{gem_instdir}/Gemfile
+%exclude %{gem_instdir}/Gemfile
 %doc %{gem_instdir}/README.md
-%{gem_instdir}/Rakefile
+%exclude %{gem_instdir}/Rakefile
 %exclude %{gem_instdir}/guard-rspec.gemspec
 %exclude %{gem_instdir}/spec
 
 %changelog
+* Tue Dec 05 2018 Ilya Gradina <ilya.gradina@gmail.com> - 4.7.3-1
+- update to 4.7.3
+
 * Sun Oct 04 2015 Ilya Gradina <ilya.gradina@gmail.com> - 4.6.4-1
 - Initial package
