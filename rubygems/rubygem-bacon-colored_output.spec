@@ -2,15 +2,13 @@
 
 Name: rubygem-%{gem_name}
 Version: 1.1.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Colored output for Bacon test framework! http://i.imgur.com/EpTpw.png
-Group: Development/Languages
 License: MIT
 URL: https://github.com/whitequark/bacon-colored_output 
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: rubygem(bacon)
 BuildArch: noarch
 
 %description
@@ -19,7 +17,6 @@ Colored output for Bacon test framework! http://i.imgur.com/EpTpw.png.
 
 %package doc
 Summary: Documentation for %{name}
-Group: Documentation
 Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
@@ -63,6 +60,10 @@ cp -a .%{gem_dir}/* \
 %exclude %{gem_instdir}/bacon-colored_output.gemspec
 
 %changelog
+* Tue Dec 05 2017 Ilya Gradina <ilya.gradina@gmail.com> - 1.1.1-2
+- remove bacon from BR
+- remove Group part in spec
+
 * Fri Jul 28 2017 Ilya Gradina <ilya.gradina@gmail.com> - 1.1.1-1
 - update to 1.1.1
 
