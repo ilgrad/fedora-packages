@@ -1,18 +1,22 @@
-# Generated from guard-bundler-2.1.0.gem by gem2rpm -*- rpm-spec -*-
 %global gem_name guard-bundler
 
 Name: rubygem-%{gem_name}
 Version: 2.1.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Guard gem for Bundler
-Group: Development/Languages
 License: MIT
 URL: https://rubygems.org/gems/guard-bundler
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
+# git clone https://github.com/guard/guard-bundler.git && cd guard-bundler
+# git checkout v2.1.0 && tar czvf guard-bundler-2.1.0-specs.tar.gz spec/
+Source1: %{gem_name}-%{version}-specs.tar.gz
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
-BuildRequires: ruby >= 1.9.2
 BuildRequires: rubygem(rspec)
+BuildRequires: rubygem(coveralls)
+BuildRequires: rubygem(bundler)
+BuildRequires: rubygem(guard-compat)
+BuildRequires: rubygem(guard)
 BuildArch: noarch
 
 %description
@@ -21,7 +25,6 @@ Guard::Bundler automatically install/update your gem bundle when needed.
 
 %package doc
 Summary: Documentation for %{name}
-Group: Documentation
 Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
@@ -54,7 +57,9 @@ cp -a .%{gem_dir}/* \
 # Run the test suite
 %check
 pushd .%{gem_instdir}
+  tar xzf %{SOURCE1}
   rspec -Ilib spec
+  rm -rf spec
 popd
 
 %files
@@ -69,5 +74,9 @@ popd
 %doc %{gem_instdir}/README.md
 
 %changelog
+* Thu Dec 07 2017 Ilya Gradina <ilya.gradina@gmail.com> - 2.1.0-2
+- add tests
+- add runtime dependencies
+
 * Sun Oct 04 2015 Ilya Gradina <ilya.gradina@gmail.com> - 2.1.0-1
 - Initial package
