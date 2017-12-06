@@ -2,22 +2,17 @@
 
 Name: rubygem-%{gem_name}
 Version: 2.3.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A library for working with Abstract Syntax Trees
-Group: Development/Languages
 License: MIT
 URL: https://github.com/whitequark/ast
 Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires: ruby(release)
 BuildRequires: rubygems-devel
 BuildRequires: rubygem(bacon)
-BuildRequires: rubygem(bacon-colored_output)
-BuildRequires: rubygem(simplecov)
-BuildRequires: rubygem(coveralls)
 BuildRequires: rubygem(json_pure)
 BuildRequires: rubygem(mime-types)
 BuildRequires: rubygem(rest-client)
-BuildRequires: rubygem(yard)
 BuildRequires: rubygem(kramdown)
 BuildArch: noarch
 
@@ -27,7 +22,6 @@ A library for working with Abstract Syntax Trees.
 
 %package doc
 Summary: Documentation for %{name}
-Group: Documentation
 Requires: %{name} = %{version}-%{release}
 BuildArch: noarch
 
@@ -60,6 +54,11 @@ cp -a .%{gem_dir}/* \
 # Run the test suite
 %check
 pushd .%{gem_instdir}
+  sed -i  '/colored_output/ s/^/#/' test/helper.rb
+  sed -i '/simplecov/, /coveralls/ s/^/#/' test/helper.rb
+  sed -i '/SimpleCov\.formatter/ s/^/#/' test/helper.rb
+  sed -i '/SimpleCov\.start/,/end/ s/^/#/' test/helper.rb
+  cat test/helper.rb
   bacon -Itest -a test/test_*.rb
 popd
 
@@ -82,6 +81,9 @@ popd
 %exclude %{gem_instdir}/test
 
 %changelog
+* Thu Dec 07 2017 Ilya Gradina <ilya.gradina@gmail.com> - 2.3.0-2
+- remove  dependencies for tests
+
 * Sat Sep 03 2016 Ilya Gradina <ilya.gradina@gmail.com> - 2.3.0-1
 - update to 2.3.0
 
