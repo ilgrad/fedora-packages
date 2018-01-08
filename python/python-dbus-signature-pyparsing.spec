@@ -2,7 +2,7 @@
 Name:          python-%{srcname}
 Version:       0.03
 Release:       1%{?dist}
-Summary:       A parser for a dbus signature
+Summary:       Parser for a dbus signature
 
 License:       ASL 2.0
 URL:           https://github.com/stratis-storage/dbus-signature-pyparsing
@@ -11,7 +11,7 @@ Source0:       %{url}/archive/v%{version}/%{srcname}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
-A D-Bus signature parser generated using the pyparsing library
+D-Bus signature parser generated using the pyparsing library.
 
 %package -n python3-%{srcname}
 Summary: %{summary}
@@ -25,8 +25,7 @@ BuildRequires: python3-pytest
 %{?python_provide:%python_provide python3-%{srcname}}
 
 %description -n python3-%{srcname}
-Generates functions that transform values in Python core types to values
- in dbus-python types
+D-Bus signature parser generated using the pyparsing library.
 
 %prep
 %autosetup -n %{srcname}-%{version}
