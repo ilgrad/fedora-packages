@@ -19,6 +19,7 @@ Summary: %{summary}
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 BuildRequires: python3-dbus-signature-pyparsing
+BuildRequires: python3-dbus
 BuildRequires: python3-pytest
 Requires: python3-dbus
 Requires: python3-dbus-signature-pyparsing
