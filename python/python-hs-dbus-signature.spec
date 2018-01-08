@@ -35,7 +35,7 @@ A Hypothesis Strategy for Generating Arbitrary DBus Signatures.
 %py3_install
 
 %check
-pytest-%{python3_version} -v tests
+PYTHONPATH=%{buildroot}%{python3_sitelib} pytest-%{python3_version} -v tests
 
 %files -n python3-%{srcname}
 %license LICENSE.txt
