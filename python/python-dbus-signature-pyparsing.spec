@@ -21,6 +21,7 @@ BuildRequires: python3-pyparsing
 BuildRequires: python3-hypothesis
 BuildRequires: python3-hs-dbus-signature
 BuildRequires: python3-pytest
+Requires: python3-pyparsing
 
 %{?python_provide:%python_provide python3-%{srcname}}
 
