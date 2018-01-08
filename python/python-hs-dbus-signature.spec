@@ -12,7 +12,6 @@ Source0:       https://github.com/stratis-storage/%{srcname}/archive/v%{version}
 BuildArch: noarch
 
 BuildRequires: python3-devel
-BuildRequires: python3-pyparsing
 Requires:      python3-hypothesis
 
 %description
