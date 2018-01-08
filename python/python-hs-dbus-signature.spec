@@ -18,6 +18,7 @@ Summary: %{summary}
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 BuildRequires: python3-hypothesis
+BuildRequires: python3-pytest
 
 %{?python_provide:%python_provide python3-%{srcname}}
 
@@ -34,9 +35,11 @@ A Hypothesis Strategy for Generating Arbitrary DBus Signatures.
 %py3_install
 
 %check
-%{__python3} setup.py test
+pytest-%{python3_version} -v tests
 
 %files -n python3-%{srcname}
+%license LICENSE.txt
+%doc README.rst
 %{python3_sitelib}/hs_dbus_signature/
 %{python3_sitelib}/hs_dbus_signature-*.egg-info/
 
