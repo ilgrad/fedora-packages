@@ -2,7 +2,7 @@
 
 Name:           rubygem-%{gem_name}
 Version:        4.7.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Guard gem for RSpec
 
 License:        MIT
@@ -42,7 +42,7 @@ cp -a .%{gem_dir}/* %{buildroot}%{gem_dir}/
 
 %check
 mv spec/acceptance/formatter_spec.rb{,.disabled}
-rspec -Ilib spec ||: 
+rspec --exclude-pattern '**/guard/*_formatter_spec.rb, **/rspec/*_process_spec.rb' -f d
 
 
 %files
@@ -65,6 +65,9 @@ rspec -Ilib spec ||:
 %exclude %{gem_instdir}/spec
 
 %changelog
+* Mon Feb 12 2018 Ilya Gradina <ilya.gradina@gmail.com> - 4.7.3-3
+- excluded few tests group 
+
 * Sun Feb 11 2018 Ilya Gradina <ilya.gradina@gmail.com> - 4.7.3-2
 - small fix 
 
