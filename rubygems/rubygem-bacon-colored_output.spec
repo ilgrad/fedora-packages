@@ -1,19 +1,20 @@
 %global gem_name bacon-colored_output
 
-Name: rubygem-%{gem_name}
-Version: 1.1.1
-Release: 2%{?dist}
-Summary: Colored output for Bacon test framework! http://i.imgur.com/EpTpw.png
-License: MIT
-URL: https://github.com/whitequark/bacon-colored_output 
-Source0: https://rubygems.org/gems/%{gem_name}-%{version}.gem
-BuildRequires: ruby(release)
-BuildRequires: rubygems-devel
-BuildArch: noarch
+Name:           rubygem-%{gem_name}
+Version:        1.1.1
+Release:        3%{?dist}
+Summary:        Colored output for Bacon test framework! http://i.imgur.com/EpTpw.png
+
+License:        MIT
+URL:            https://github.com/whitequark/bacon-colored_output 
+Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
+
+BuildRequires:  rubygems-devel
+
+BuildArch:      noarch
 
 %description
 Colored output for Bacon test framework! http://i.imgur.com/EpTpw.png.
-
 
 %package doc
 Summary: Documentation for %{name}
@@ -24,34 +25,24 @@ BuildArch: noarch
 Documentation for %{name}.
 
 %prep
-gem unpack %{SOURCE0}
-
-%setup -q -D -T -n  %{gem_name}-%{version}
-
-gem spec %{SOURCE0} -l --ruby > %{gem_name}.gemspec
+%autosetup -n %{gem_name}-%{version}
 
 %build
-# Create the gem as gem install only works on a gem file
-gem build %{gem_name}.gemspec
-
-# %%gem_install compiles any C extensions and installs the gem into ./%%gem_dir
-# by default, so that we can move it into the buildroot in %%install
+gem build ../%{gem_name}-%{version}.gemspec
 %gem_install
 
 %install
 mkdir -p %{buildroot}%{gem_dir}
-cp -a .%{gem_dir}/* \
-        %{buildroot}%{gem_dir}/
-
+cp -a .%{gem_dir}/* %{buildroot}%{gem_dir}/
 
 %files
 %dir %{gem_instdir}
 %doc %{gem_instdir}/README.md
-%exclude %{gem_instdir}/.*
 %license %{gem_instdir}/LICENSE.txt
 %{gem_libdir}
-%exclude %{gem_cache}
 %{gem_spec}
+%exclude %{gem_instdir}/.*
+%exclude %{gem_cache}
 
 %files doc
 %doc %{gem_docdir}
@@ -60,6 +51,9 @@ cp -a .%{gem_dir}/* \
 %exclude %{gem_instdir}/bacon-colored_output.gemspec
 
 %changelog
+* Tue Feb 13 2018 Ilya Gradina <ilya.graidna@gmail.com> - 1.1.1-3
+- small change in spec file 
+
 * Tue Dec 05 2017 Ilya Gradina <ilya.gradina@gmail.com> - 1.1.1-2
 - remove bacon from BR
 - remove Group part in spec
